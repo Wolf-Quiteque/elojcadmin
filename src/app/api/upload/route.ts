@@ -7,6 +7,11 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+interface CloudinaryUploadResult {
+  secure_url: string;
+  [key: string]: unknown;
+}
+
 export async function POST(request: Request) {
   const formData = await request.formData();
   const file = formData.get("file") as File;
@@ -16,27 +21,22 @@ export async function POST(request: Request) {
   }
 
   const fileBuffer = await file.arrayBuffer();
-  var mime = file.type;
-  var encoding = "base64";
-  var base64Data = Buffer.from(fileBuffer).toString("base64");
-  var fileUri = "data:" + mime + ";" + encoding + "," + base64Data;
+  const mime = file.type;
+  const encoding = "base64";
+  const base64Data = Buffer.from(fileBuffer).toString("base64");
+  const fileUri = `data:${mime};${encoding},${base64Data}`;
 
   try {
-    const uploadToCloudinary = () => {
+    const uploadToCloudinary = (): Promise<CloudinaryUploadResult> => {
       return new Promise((resolve, reject) => {
         cloudinary.uploader
-          .upload(fileUri, {
-            invalidate: true,
-          })
-          .then((result) => {
-            resolve(result);
-          })
-          .catch((error) => {
-            reject(error);
-          });
+          .upload(fileUri, { invalidate: true })
+          .then(resolve)
+          .catch(reject);
       });
     };
-    const result: any = await uploadToCloudinary();
+
+    const result = await uploadToCloudinary();
     return NextResponse.json({ url: result.secure_url });
   } catch (error) {
     console.error("Error uploading to Cloudinary:", error);

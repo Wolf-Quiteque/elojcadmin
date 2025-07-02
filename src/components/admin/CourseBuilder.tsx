@@ -8,7 +8,7 @@ export function CourseBuilder() {
     title: '',
     description: '',
     price: 0,
-    thumbnail: null
+    thumbnail: ''
   });
 
   const handleCreateCourse = async () => {

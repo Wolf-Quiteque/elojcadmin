@@ -69,13 +69,13 @@ export default function DashboardPage() {
             <div className="space-y-4">
               <div className="flex items-center">
                 <div className="ml-4 space-y-1">
-                  <p className="text-sm font-medium leading-none">Novo estudante matriculado em 'Next.js para Iniciantes'.</p>
+                  <p className="text-sm font-medium leading-none">Novo estudante matriculado em &apos;Next.js para Iniciantes&apos;.</p>
                   <p className="text-sm text-muted-foreground">Há 2 horas</p>
                 </div>
               </div>
               <div className="flex items-center">
                 <div className="ml-4 space-y-1">
-                  <p className="text-sm font-medium leading-none">Novo curso 'TypeScript Avançado' publicado.</p>
+                  <p className="text-sm font-medium leading-none">Novo curso &apos;TypeScript Avançado&apos; publicado.</p>
                   <p className="text-sm text-muted-foreground">Há 1 dia</p>
                 </div>
               </div>
