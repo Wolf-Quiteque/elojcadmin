@@ -2,6 +2,8 @@
 
 This document outlines the plan for creating a comprehensive, modern, and futuristic admin panel for teachers on the Edusphere platform.
 
+**Project Language:** The codebase is maintained in **JavaScript** rather than TypeScript.
+
 ## 1. Project Analysis
 
 ### 1.1. Database Schema (`schema.sql`)

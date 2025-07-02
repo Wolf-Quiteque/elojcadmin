@@ -1,15 +1,7 @@
 "use client";
-
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
+import { Card, CardContent, CardHeader, CardTitle, } from "@/components/ui/card";
 export default function ProfilePage() {
-  return (
-    <div>
+    return (<div>
       <h1 className="text-3xl font-bold mb-6">Profile</h1>
       <Card>
         <CardHeader>
@@ -19,6 +11,5 @@ export default function ProfilePage() {
           <p>Profile editing form will be here.</p>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
 }
