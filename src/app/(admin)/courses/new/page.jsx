@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ export default function NewCoursePage() {
     const [videoUrl, setVideoUrl] = useState("");
     const supabase = createClient();
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const handleThumbnailUpload = async (e) => {
         var _a;
         const file = (_a = e.target.files) === null || _a === void 0 ? void 0 : _a[0];
@@ -37,8 +39,10 @@ export default function NewCoursePage() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const { data: { user }, } = await supabase.auth.getUser();
         if (!user) {
+            setLoading(false);
             return;
         }
         const { data: courseData, error: courseError } = await supabase
@@ -76,6 +80,7 @@ export default function NewCoursePage() {
                 router.push("/courses");
             }
         }
+        setLoading(false);
     };
     return (<div>
       <h1 className="text-3xl font-bold mb-6">Create New Course</h1>
@@ -105,7 +110,9 @@ export default function NewCoursePage() {
               <Label>Course Video</Label>
               <VideoUploader onUploadComplete={setVideoUrl}/>
             </div>
-            <Button type="submit">Create Course</Button>
+            <Button type="submit" disabled={loading} className="gap-2">
+              {loading && <Spinner className="h-4 w-4" />} Create Course
+            </Button>
           </form>
         </CardContent>
       </Card>

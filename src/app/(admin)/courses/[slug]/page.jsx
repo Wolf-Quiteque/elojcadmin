@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +15,7 @@ export default function CourseEditorPage({ params, }) {
     const [thumbnail, setThumbnail] = useState("");
     const supabase = createClient();
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const { slug } = params;
     useEffect(() => {
         const fetchCourse = async () => {
@@ -55,6 +57,7 @@ export default function CourseEditorPage({ params, }) {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const { error } = await supabase
             .from("courses")
             .update({
@@ -70,6 +73,7 @@ export default function CourseEditorPage({ params, }) {
         else {
             router.push("/courses");
         }
+        setLoading(false);
     };
     return (<div>
       <h1 className="text-3xl font-bold mb-6">Edit Course</h1>
@@ -95,7 +99,9 @@ export default function CourseEditorPage({ params, }) {
               <Label htmlFor="thumbnail">Thumbnail</Label>
               <Input id="thumbnail" type="file" onChange={handleThumbnailUpload}/>
             </div>
-            <Button type="submit">Save Changes</Button>
+            <Button type="submit" disabled={loading} className="gap-2">
+              {loading && <Spinner className="h-4 w-4" />} Save Changes
+            </Button>
           </form>
         </CardContent>
       </Card>

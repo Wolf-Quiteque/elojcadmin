@@ -1,14 +1,19 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Spinner } from '@/components/ui/spinner';
 import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
     const handleLogin = async (e) => {
         e.preventDefault();
         setError(null);
+        setLoading(true);
         const supabase = createClient();
         try {
             const { error } = await supabase.auth.signInWithPassword({
@@ -18,10 +23,14 @@ export default function LoginPage() {
             if (error) {
                 setError(error.message);
             }
+            else {
+                router.push('/dashboard');
+            }
         }
         catch (_a) {
             setError('An unexpected error occurred.');
         }
+        setLoading(false);
     };
     return (<div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
@@ -41,8 +50,12 @@ export default function LoginPage() {
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
           <div>
-            <button type="submit" className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-              Entrar
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full px-4 py-2 flex items-center justify-center gap-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-75"
+            >
+              {loading && <Spinner className="h-4 w-4" />} Entrar
             </button>
           </div>
         </form>
