@@ -1,15 +1,7 @@
 "use client";
-
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
+import { Card, CardContent, CardHeader, CardTitle, } from "@/components/ui/card";
 export default function AnalyticsPage() {
-  return (
-    <div>
+    return (<div>
       <h1 className="text-3xl font-bold mb-6">Analytics</h1>
       <Card>
         <CardHeader>
@@ -19,6 +11,5 @@ export default function AnalyticsPage() {
           <p>Analytics data will be displayed here.</p>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
 }
