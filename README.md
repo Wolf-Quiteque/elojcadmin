@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Edusphere Admin
+
+Edusphere Admin powers the teacher dashboard for the Edusphere platform. The app is built with **Next.js**, **Supabase**, and **Shadcn/UI** to help educators manage courses, students, and live sessions.
+
+See [ADMIN_PLAN.md](./ADMIN_PLAN.md) for the complete project plan.
+
 This codebase is written in **JavaScript**.
 
 ## Getting Started
