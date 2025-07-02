@@ -14,6 +14,7 @@ import { ContentItem } from "@/types";
 
 type CourseContentPageProps = {
   params: { slug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
 export default function CourseContentPage({ params }: CourseContentPageProps) {
