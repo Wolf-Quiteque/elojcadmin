@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -12,11 +10,14 @@ import {
 } from "@/components/ui/card";
 import { ContentItem } from "@/types";
 
-export default function CourseContentPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+// ✅ Type for page props
+type CourseContentPageProps = {
+  params: {
+    slug: string;
+  };
+};
+
+export default function CourseContentPage({ params }: CourseContentPageProps) {
   const [contentItems, setContentItems] = useState<ContentItem[]>([]);
   const supabase = createClient();
   const { slug } = params;
@@ -35,11 +36,13 @@ export default function CourseContentPage({
           .select("*")
           .eq("course_id", courseData.id)
           .order("position");
+
         if (contentData) {
           setContentItems(contentData);
         }
       }
     };
+
     fetchContentItems();
   }, [slug, supabase]);
 
