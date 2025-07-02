@@ -11,14 +11,17 @@ import {
 } from "@/components/ui/card";
 import { ContentItem } from "@/types";
 
-// ✅ Type for page props
-type CourseContentPageProps = {
+// Updated type for page props
+interface PageProps {
   params: {
     slug: string;
   };
-};
+  searchParams?: {
+    [key: string]: string | string[] | undefined;
+  };
+}
 
-export default function CourseContentPage({ params }: CourseContentPageProps) {
+export default function CourseContentPage({ params }: PageProps) {
   const [contentItems, setContentItems] = useState<ContentItem[]>([]);
   const supabase = createClient();
   const { slug } = params;
