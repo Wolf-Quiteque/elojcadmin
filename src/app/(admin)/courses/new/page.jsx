@@ -37,6 +37,13 @@ export default function NewCoursePage() {
             console.error("Upload failed:", error);
         }
     };
+    const generateSlug = (str) => {
+        return str
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)+/g, "");
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -50,10 +57,11 @@ export default function NewCoursePage() {
             .insert([
             {
                 title,
+                slug: generateSlug(title),
                 description,
                 price: parseFloat(price),
                 teacher_id: user.id,
-                thumbnail,
+                thumbnail_url: thumbnail,
             },
         ])
             .select();
