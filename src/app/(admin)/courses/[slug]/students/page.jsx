@@ -14,9 +14,16 @@ export default function CourseStudentsPage({ params, }) {
                 .eq("slug", slug)
                 .single();
             if (courseData) {
-                // This is a placeholder. We need a table that links students to courses.
-                // For now, we'll just display a message.
-                setStudents([]);
+                const { data, error } = await supabase
+                    .from("enrollments")
+                    .select("profiles(id, full_name)")
+                    .eq("course_id", courseData.id);
+                if (error) {
+                    console.error("Error fetching students:", error);
+                }
+                else if (data) {
+                    setStudents(data.map((enroll) => enroll.profiles));
+                }
             }
         };
         fetchStudents();
