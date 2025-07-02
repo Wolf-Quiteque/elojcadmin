@@ -1,4 +1,4 @@
-"use client"
+"use cliente"
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -11,17 +11,12 @@ import {
 } from "@/components/ui/card";
 import { ContentItem } from "@/types";
 
-// Updated type for page props
-interface PageProps {
-  params: {
-    slug: string;
-  };
-  searchParams?: {
-    [key: string]: string | string[] | undefined;
-  };
-}
 
-export default function CourseContentPage({ params }: PageProps) {
+type CourseContentPageProps = {
+  params: { slug: string };
+};
+
+export default function CourseContentPage({ params }: CourseContentPageProps) {
   const [contentItems, setContentItems] = useState<ContentItem[]>([]);
   const supabase = createClient();
   const { slug } = params;
