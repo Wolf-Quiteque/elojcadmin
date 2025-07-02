@@ -10,14 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ContentItem } from "@/types";
-
-
-type CourseContentPageProps = {
-  params: { slug: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
-
-export default function CourseContentPage({ params }: CourseContentPageProps) {
+export default function CourseContentPage({ params }: { params: { slug: string } }) {
   const [contentItems, setContentItems] = useState<ContentItem[]>([]);
   const supabase = createClient();
   const { slug } = params;
