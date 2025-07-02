@@ -7,9 +7,16 @@ export default function StudentsPage() {
     const supabase = createClient();
     useEffect(() => {
         const fetchStudents = async () => {
-            // This is a placeholder. We need to fetch all students.
-            // For now, we'll just display a message.
-            setStudents([]);
+            const { data, error } = await supabase
+                .from("profiles")
+                .select("id, full_name, enrollments(courses(title, slug))")
+                .eq("role", "student");
+            if (error) {
+                console.error("Error fetching students:", error);
+            }
+            else if (data) {
+                setStudents(data);
+            }
         };
         fetchStudents();
     }, [supabase]);
@@ -21,7 +28,12 @@ export default function StudentsPage() {
         </CardHeader>
         <CardContent>
           {students.length > 0 ? (<ul>
-              {students.map((student) => (<li key={student.id}>{student.full_name}</li>))}
+              {students.map((student) => (<li key={student.id} className="mb-2">
+                  <div>{student.full_name}</div>
+                  {student.enrollments && student.enrollments.length > 0 && (<ul className="ml-4 list-disc">
+                        {student.enrollments.map((enroll) => (<li key={enroll.course_id}>{enroll.courses.title}</li>))}
+                      </ul>)}
+                </li>))}
             </ul>) : (<p>Nehum Estudante encontrado.</p>)}
         </CardContent>
       </Card>

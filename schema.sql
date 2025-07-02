@@ -21,6 +21,14 @@ CREATE TABLE courses (
   view_count INT DEFAULT 0
 );
 
+-- Enrollments Table
+CREATE TABLE enrollments (
+  student_id UUID REFERENCES profiles(id),
+  course_id UUID REFERENCES courses(id),
+  enrolled_at TIMESTAMPTZ DEFAULT now(),
+  PRIMARY KEY (student_id, course_id)
+);
+
 -- Content Items
 CREATE TYPE content_type AS ENUM ('video', 'quiz', 'text', 'assignment');
 CREATE TABLE content_items (
